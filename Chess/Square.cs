@@ -20,17 +20,17 @@ namespace Chess
         public int Row { get; protected set; }
         public int Column { get; protected set; }
 
-        
+
 
         #region Move Logic
 
         public Square Move(int steps, int rowIncrement, int columnIncrement)
         {
-            var row = this.Row; 
+            var row = this.Row;
             var column = this.Column;
             Square lastSquare = null;
 
-            while(steps > 0)
+            while (steps > 0)
             {
                 row += rowIncrement;
                 column += columnIncrement;
@@ -47,7 +47,7 @@ namespace Chess
                 }
             }
 
-            if(steps == 0)
+            if (steps == 0)
             {
                 return lastSquare;
             }
@@ -104,14 +104,16 @@ namespace Chess
 
         public bool IsDiagonalTo(Square position)
         {
-            var rowDelta = position.Row - this.Row;
-            var columnDelta = position.Column - this.Column;
-            var delta = Math.Abs(rowDelta);
+            if (this.Row == position.Row || this.Column == position.Column)
+            {
+                return false;
+            }
 
-            var rowIncrement = ((rowDelta < 0) ? -1 : (rowDelta > 0) ? 1 : 0);
-            var columnIncrement = ((columnDelta < 0) ? -1 : (columnDelta > 0) ? 1 : 0);
+            var rowDelta = this.Row > position.Row ? - 1: 1;
+            var columnDelta = this.Column > position.Column ? -1 : 1;
+            var delta = Math.Abs(this.Row - position.Row);
 
-            return ((Math.Abs(rowIncrement) + Math.Abs(columnIncrement) == 2)) && this.Move(delta, rowIncrement, columnIncrement) != null;
+            return ((Math.Abs(rowDelta) + Math.Abs(columnDelta) == 2)) && this.Move(delta, rowDelta, columnDelta) != null;
         }
 
         #endregion

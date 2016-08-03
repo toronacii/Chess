@@ -11,7 +11,6 @@ namespace Chess
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            ConsoleHelper.SetConsoleFont();
 
             var board = new Board();
 
