@@ -15,14 +15,14 @@ namespace Chess
                 var position = context.Position;
                 var allowedSquares = new SquaresCollection();
 
-                allowedSquares.Add(position.Move(1, 3, -1));
-                allowedSquares.Add(position.Move(1, 3, 1));
-                allowedSquares.Add(position.Move(1, -3, -1));
-                allowedSquares.Add(position.Move(1, -3, 1));
-                allowedSquares.Add(position.Move(1, 1, -3));
-                allowedSquares.Add(position.Move(1, 1, 3));
-                allowedSquares.Add(position.Move(1, -1, -3));
-                allowedSquares.Add(position.Move(1, -1, 3));
+                allowedSquares.Add(position.Move(1, 2, -1));
+                allowedSquares.Add(position.Move(1, 2, 1));
+                allowedSquares.Add(position.Move(1, -2, -1));
+                allowedSquares.Add(position.Move(1, -2, 1));
+                allowedSquares.Add(position.Move(1, 1, -2));
+                allowedSquares.Add(position.Move(1, 1, 2));
+                allowedSquares.Add(position.Move(1, -1, -2));
+                allowedSquares.Add(position.Move(1, -1, 2));
 
                 return allowedSquares;
 

@@ -10,7 +10,29 @@ namespace Chess
     {
         static void Main(string[] args)
         {
-            Board.Initialize();
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            ConsoleHelper.SetConsoleFont();
+
+            var board = new Board();
+
+            do
+            {
+                Console.Clear();
+                Console.WriteLine(board);
+                Console.Write("Input your move ({0}) :", Char.ConvertFromUtf32(0x51));
+                var move = Console.ReadLine();
+
+                try
+                {
+                    board.DoMove(move);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    Console.ReadKey();
+                }
+            }
+            while (true);
         }
     }
 }

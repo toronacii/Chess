@@ -8,7 +8,7 @@ namespace Chess
 {
     public partial class Piece
     {
-        private class TowerPiece: Piece, IPiece
+        private class RookPiece: Piece, IPiece
         {
             public override IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context)
             {

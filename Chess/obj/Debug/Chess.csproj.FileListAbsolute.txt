@@ -1,1 +1,6 @@
 C:\Users\Jose Toro\Documents\Visual Studio 2015\Projects\Chess\Chess\bin\Debug\Chess.exe.config
+C:\Users\Jose Toro\Documents\Visual Studio 2015\Projects\Chess\Chess\bin\Debug\Chess.exe
+C:\Users\Jose Toro\Documents\Visual Studio 2015\Projects\Chess\Chess\bin\Debug\Chess.pdb
+C:\Users\Jose Toro\Documents\Visual Studio 2015\Projects\Chess\Chess\obj\Debug\Chess.csprojResolveAssemblyReference.cache
+C:\Users\Jose Toro\Documents\Visual Studio 2015\Projects\Chess\Chess\obj\Debug\Chess.exe
+C:\Users\Jose Toro\Documents\Visual Studio 2015\Projects\Chess\Chess\obj\Debug\Chess.pdb

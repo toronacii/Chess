@@ -11,6 +11,15 @@ namespace Chess
         public int Row { get; set; }
         public int Column { get; set; }
 
+        public SquareCoordinate() { }
+        public SquareCoordinate(int row, int column): this()
+        {
+            this.Row = row;
+            this.Column = column;
+        }
+
+        public SquareCoordinate(Square sourceSquare): this(sourceSquare.Row, sourceSquare.Column) { }
+
         public bool IsValid()
         {
             return !((Row > 8 || Row < 1) || (Column > 8 || Column < 1));
@@ -65,6 +74,46 @@ namespace Chess
         public SquareCoordinate Left(int steps = 1)
         {
             return Move(steps, 0, -1);
+        }
+
+        public SquareCoordinate Inverse()
+        {
+            return new SquareCoordinate(8 - Row + 1, 8 - Column + 1);
+        }
+
+        public static SquareCoordinate Parse(string value)
+        {
+            var squareCoordinate = new SquareCoordinate();
+            squareCoordinate.Column = (int) Enum.Parse(typeof(Board.Columns), value.First().ToString().ToUpper());
+            squareCoordinate.Row = Convert.ToInt32(value.Last().ToString());
+
+            return squareCoordinate;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var _obj = obj as SquareCoordinate;
+            if(_obj == null)
+            {
+                return false;
+            }
+
+            return _obj.Row == this.Row && _obj.Column == this.Column;
+        }
+
+        public override int GetHashCode()
+        {
+            return string.Format("{0}{1}", ((Board.Columns)Column), Row).GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}{1}", ((Board.Columns)Column), Row);
+        }
+
+        public static SquareCoordinate operator !(SquareCoordinate c1)
+        {
+            return c1.Inverse();
         }
     }
 }

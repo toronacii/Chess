@@ -15,7 +15,7 @@ namespace Chess
                 var position = context.Position;
                 var allowedMoves = new List<SquareCoordinate>();
 
-                var tower = new TowerPiece();
+                var tower = new RookPiece();
                 var bishop = new BishopPiece();
 
                 allowedMoves.AddRange(tower.ComputeControlledSquares(context));

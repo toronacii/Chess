@@ -9,5 +9,6 @@ namespace Chess
     public interface IPiece
     {
         IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context);
+        IEnumerable<SquareCoordinate> GetLinearMovement(SquareCoordinate source, SquareCoordinate target);
     }
 }
