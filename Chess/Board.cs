@@ -28,8 +28,8 @@ namespace Chess
         {
             var moveTranslated = ParseMove(move);
 
-            var sourceSquare = (Square)squaresArray.GetValue(new int[] { moveTranslated.Item1.Row, moveTranslated.Item1.Column });
-            var targetSquare = (Square)squaresArray.GetValue(new int[] { moveTranslated.Item2.Row, moveTranslated.Item2.Column });
+            var sourceSquare = moveTranslated.Item1;
+            var targetSquare =  moveTranslated.Item2;
 
             if(sourceSquare.Piece == null || sourceSquare.PieceColor.Value != turn)
             {
@@ -40,9 +40,8 @@ namespace Chess
             {
                 throw new InvalidOperationException("Invalid move, same color target piece");
             }
-
-            SquareCoordinate sourceCoordinate = sourceSquare;
-            var movementContext = new PieceContext
+            
+            var movementContext = new MovementContext
             {
                 Color = this.turn,
                 Moved = false,
@@ -65,16 +64,6 @@ namespace Chess
             sourceSquare.PieceColor = null;
 
             turn = (turn == PieceColor.White) ? PieceColor.Black : PieceColor.White;
-
-            
-
-
-            //TODO Extravalidations
-
-
-            //TODO Handle move translation
-
-
         }
 
 
@@ -160,7 +149,7 @@ namespace Chess
             }
         }
 
-        private Tuple<SquareCoordinate, SquareCoordinate> ParseMove(string move)
+        private Tuple<Square, Square> ParseMove(string move)
         {
             var matches = Regex.Match(move, "([A-H][1-8])-([A-H][1-8])", RegexOptions.IgnoreCase);
             if (!matches.Success)
@@ -168,8 +157,19 @@ namespace Chess
                 throw new InvalidOperationException("Invalid move");
             }
 
-            return new Tuple<SquareCoordinate, SquareCoordinate>(SquareCoordinate.Parse(matches.Groups[1].Value), SquareCoordinate.Parse(matches.Groups[2].Value));
+
+
+            return new Tuple<Square, Square>(this.GetSquareFromString(matches.Groups[1].Value), this.GetSquareFromString(matches.Groups[2].Value));
         }
+
+        private Square GetSquareFromString(string value)
+        {
+            var column = (int)Enum.Parse(typeof(Board.Columns), value.First().ToString().ToUpper());
+            var row = Convert.ToInt32(value.Last().ToString());
+
+            return (Square)squaresArray.GetValue(new[] { row, column });
+        }
+    
         #endregion
     }
 }

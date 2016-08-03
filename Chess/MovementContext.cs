@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
-    public class PieceContext : IMovementContext
+    public class MovementContext : IMovementContext
     {
         public PieceColor Color { get; set; }
 

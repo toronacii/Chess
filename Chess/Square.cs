@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Chess
 {
@@ -114,12 +115,7 @@ namespace Chess
         }
 
         #endregion
-
-        public static implicit operator SquareCoordinate(Square square)  // implicit digit to byte conversion operator
-        {
-            return new SquareCoordinate(square);
-        }
-
+        
         public override string ToString()
         {
             if(Piece == null)
