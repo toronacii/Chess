@@ -10,22 +10,40 @@ namespace Chess
     {
         private class PawnPiece : Piece, IPiece
         {
-            public override IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context)
+            public override bool Validate(IMovementContext context)
             {
-                var position = context.Position;
-                var isOriginalPosition = position.Row == 2;
-                var allowedMoves = new SquaresCollection();
+                var direction = context.Color == PieceColor.White ? 1 : -1;
+                var sourcePosition = context.Color == PieceColor.White ? 2 : 7;
 
-                allowedMoves.Add(position.Forward());
-                allowedMoves.Add(position.ForwardLeftDiagonal());
-                allowedMoves.Add(position.ForwardRightDiagonal());
-
-                if (isOriginalPosition)
+                //Validation
+                if (context.Position.Row == context.Target.Row)
                 {
-                    allowedMoves.Add(position.Forward(2));
+                    return false;
                 }
 
-                return allowedMoves;
+                if ((context.Position.Row == sourcePosition) 
+                    && ((context.Position.Row + (direction * 2)) != context.Target.Row)
+                    && ((context.Position.Row + direction != context.Target.Row)))
+                {
+                    return false;
+                }
+
+                if ((context.Position.Row != sourcePosition) && (context.Position.Row + direction) != context.Target.Row)
+                {
+                    return false;
+                }
+
+                if((context.Position.Column == context.Target.Column) && context.Target.Piece != null)
+                {
+                    return false;
+                }
+
+                if((context.Position.Column != context.Target.Column) && Math.Abs(context.Position.Column - context.Target.Column) != 1)
+                {
+                    return false;
+                }
+
+                return this.IsValidLinearMovement(context.Position, context.Target);
             }
         }
     }

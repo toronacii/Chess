@@ -16,26 +16,27 @@ namespace Chess
         public readonly static IPiece Pawn = new PawnPiece();
 
         protected Piece() { }
-
-        public abstract IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context);
-        public virtual IEnumerable<SquareCoordinate> GetLinearMovement(SquareCoordinate source, SquareCoordinate target)
+        
+        protected virtual bool IsValidLinearMovement(Square source, Square target)
         {
-            var allowedSquares = new List<SquareCoordinate>();
+            var allowedSquares = new List<Square>();
             var rowDelta = target.Row - source.Row;
             var columnDelta = target.Column - source.Column;
 
-            var rowIncrement = ((rowDelta < 0) ? -1 : (rowDelta > 1) ? 1 : 0);
-            var columnIncrement = ((columnDelta < 0) ? -1 : (columnDelta > 1) ? 1 : 0);
+            var rowIncrement = ((rowDelta < 0) ? -1 : (rowDelta > 0) ? 1 : 0);
+            var columnIncrement = ((columnDelta < 0) ? -1 : (columnDelta > 0) ? 1 : 0);
 
             var nextPosition = source.Move(1, rowIncrement, columnIncrement);
-            while (!nextPosition.Equals(target) && nextPosition.IsValid())
+            while (nextPosition != null && !nextPosition.Equals(target))
             {
                 allowedSquares.Add(nextPosition);
 
                 nextPosition = nextPosition.Move(1, rowIncrement, columnIncrement);
             }
 
-            return allowedSquares;
+            return !allowedSquares.Any(s => s.Piece != null);
         }
+
+        public abstract bool Validate(IMovementContext context);
     }
 }

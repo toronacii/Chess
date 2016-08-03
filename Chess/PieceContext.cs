@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace Chess
 {
-    public class PieceContext : IPieceContext
+    public class PieceContext : IMovementContext
     {
         public PieceColor Color { get; set; }
 
+        public Square Target { get; set; }
+
         public bool Moved { get; set; }
 
-        public SquareCoordinate Position { get; set; }
+        public Square Position { get; set; }
     }
 }

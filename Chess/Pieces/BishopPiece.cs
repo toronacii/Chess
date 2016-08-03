@@ -10,31 +10,18 @@ namespace Chess
     {
         private class BishopPiece: Piece, IPiece
         {
-            public override IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context)
+
+            public override bool Validate(IMovementContext context)
             {
-                var position = context.Position;
-                var allowedMoves = new List<SquareCoordinate>();
-
-                allowedMoves.AddRange(GetDiagonalSquares(position, 1, 1));
-                allowedMoves.AddRange(GetDiagonalSquares(position, 1, -1));
-                allowedMoves.AddRange(GetDiagonalSquares(position, -1, 1));
-                allowedMoves.AddRange(GetDiagonalSquares(position, -1, -1));
-
-                return allowedMoves;
-            }
-
-            public IEnumerable<SquareCoordinate> GetDiagonalSquares(SquareCoordinate position, int rowIncrement, int columnIncrement)
-            {
-                var allowedSquares = new List<SquareCoordinate>();
-                var nextPosition = position.Move(1, rowIncrement, columnIncrement);
-                while(nextPosition.IsValid())
+                if ((context.Position.Row != context.Target.Row) && (context.Position.Column != context.Target.Column))
                 {
-                    allowedSquares.Add(nextPosition);
+                    bool isValidDiagonalMovement = context.Position.IsDiagonalTo(context.Target);
+                    bool isValidLinearMovement = this.IsValidLinearMovement(context.Position, context.Target);
 
-                    nextPosition = nextPosition.Move(1, rowIncrement, columnIncrement);
+                    return isValidDiagonalMovement && isValidLinearMovement;
                 }
 
-                return allowedSquares;
+                return false;
             }
         }
     }

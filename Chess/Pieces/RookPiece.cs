@@ -10,37 +10,16 @@ namespace Chess
     {
         private class RookPiece: Piece, IPiece
         {
-            public override IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context)
+            public override bool Validate(IMovementContext context)
             {
-                var position = context.Position;
-                var allowedMoves = new SquaresCollection();
-
-                for(var column = 1; column <= 8; column++)
+                if(context.Position.Row == context.Target.Row || context.Position.Column == context.Target.Column)
                 {
-                    if (column < position.Column)
-                    {
-                        allowedMoves.Add(position.Left(position.Column - column));
-                    }
-                    else if(column > position.Column)
-                    {
-                        allowedMoves.Add(position.Right(column - position.Column));
-                    }
+                    return this.IsValidLinearMovement(context.Position, context.Target);
                 }
 
-                for (var row = 1; row <= 8; row++)
-                {
-                    if (row < position.Row)
-                    {
-                        allowedMoves.Add(position.Backward(position.Row - row));
-                    }
-                    else if (row > position.Row)
-                    {
-                        allowedMoves.Add(position.Forward(row - position.Row));
-                    }
-                }
-
-                return allowedMoves;
+                return false;
             }
+            
         }
     }
 }

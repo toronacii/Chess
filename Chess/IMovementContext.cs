@@ -1,8 +1,10 @@
 ﻿namespace Chess
 {
-    public interface IPieceContext
+    public interface IMovementContext
     {
-        SquareCoordinate Position { get; set; }
+        Square Position { get; set; }
+        Square Target { get; set; }
+
         bool Moved { get; set; }
              
         PieceColor Color { get; set; }

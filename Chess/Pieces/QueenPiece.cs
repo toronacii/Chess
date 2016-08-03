@@ -10,18 +10,12 @@ namespace Chess
     {
         private class QueenPiece: Piece, IPiece
         {
-            public override IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context)
+            public override bool Validate(IMovementContext context)
             {
-                var position = context.Position;
-                var allowedMoves = new List<SquareCoordinate>();
-
                 var tower = new RookPiece();
                 var bishop = new BishopPiece();
 
-                allowedMoves.AddRange(tower.ComputeControlledSquares(context));
-                allowedMoves.AddRange(bishop.ComputeControlledSquares(context));
-
-                return allowedMoves;
+                return tower.Validate(context) && bishop.Validate(context);
             }
         }
     }

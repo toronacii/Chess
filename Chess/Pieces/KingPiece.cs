@@ -10,21 +10,26 @@ namespace Chess
     {
         private class KingPiece : Piece, IPiece
         {
-            public override IEnumerable<SquareCoordinate> ComputeControlledSquares(IPieceContext context)
+            public override bool Validate(IMovementContext context)
             {
-                var position = context.Position;
-                var allowedMoves = new SquaresCollection();
+                var moveDeltas = new List<Tuple<int, int>>
+                {
+                    new Tuple<int, int>( 1,  0),
+                    new Tuple<int, int>( 1,  1),
+                    new Tuple<int, int>( 1, -1),
+                    new Tuple<int, int>( 0,  1),
+                    new Tuple<int, int>( 0, -1),
+                    new Tuple<int, int>(-1,  0),
+                    new Tuple<int, int>(-1,  1),
+                    new Tuple<int, int>(-1, -1)
+                };
 
-                allowedMoves.Add(position.ForwardLeftDiagonal());
-                allowedMoves.Add(position.Forward());
-                allowedMoves.Add(position.BackwardRightDiagonal());
-                allowedMoves.Add(position.Left());
-                allowedMoves.Add(position.Right());
-                allowedMoves.Add(position.BackwardLeftDiagonal());
-                allowedMoves.Add(position.Backward());
-                allowedMoves.Add(position.BackwardRightDiagonal());
-                
-                return allowedMoves;
+                return moveDeltas.Any(d => MatchMove(context.Position, context.Target, d.Item1, d.Item2));
+            }
+
+            private bool MatchMove(Square source, Square target, int rowDelta, int columnDelta)
+            {
+                return ((source.Row + rowDelta) == target.Row) && ((source.Column + columnDelta) == target.Column);
             }
         }
     }
